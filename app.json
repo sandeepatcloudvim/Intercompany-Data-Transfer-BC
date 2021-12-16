@@ -1,0 +1,45 @@
+{
+  "id": "95b2de56-0a31-46e4-99d8-6648b67a932b",
+  "name": "Intercompany Data Transfer BC18",
+  "publisher": "Kinetic Wizard",
+  "version": "18.0.0.6",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",  "logo": "",
+  "dependencies": [
+    {
+      "id": "5ecfc871-5d82-43f1-9c54-59685e82318d",
+      "name": "LS Central",
+      "publisher": "LS Retail",
+      "version": "18.3.4.1000009"
+    },
+    {
+      "id": "2a0547fa-f60f-401d-b1fe-c7c4be8fb230",
+      "name": "LS Central System App",
+      "publisher": "LS Retail",
+      "version": "18.3.0.1000281"
+    },
+    {
+      "id": "13596065-5357-4173-b921-79ab26d031de",
+      "name": "Scale Integration",
+      "publisher": "LS Retail",
+      "version": "18.0.0.10"
+    }
+
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "18.0.0.0",
+  "idRanges": [
+    {
+      "from": 50000,
+      "to": 99999
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://IntercompanyDataTransfer.com/help/",
+  "showMyCode": false,
+  "runtime": "7.0"
+}
