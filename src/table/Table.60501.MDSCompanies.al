@@ -21,6 +21,11 @@ table 60501 "MDS Companies"
             DataClassification = ToBeClassified;
             Caption = 'Include for Data Sync';
         }
+        field(4; "Overwrite Existing Data"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Overwrite Existing Data';
+        }
 
     }
 

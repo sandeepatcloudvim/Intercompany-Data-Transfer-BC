@@ -7,7 +7,7 @@ pageextension 60506 ExtendItemList extends "Item List"
             field("Include For Sync"; Rec."Include For Sync")
             {
                 ApplicationArea = All;
-                Caption = 'Include For Sync';
+                Caption = 'Sync Data';
             }
         }
     }

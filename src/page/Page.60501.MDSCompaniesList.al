@@ -28,6 +28,13 @@ page 60501 "MDS Companies"
                     Caption = 'Include for Data Sync';
                     ToolTip = 'Specifies a Data Sync for the company.';
                 }
+                field("Overwrite Existing Data"; Rec."Overwrite Existing Data")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Overwrite Existing Data';
+                    ToolTip = 'Specifies a Data Sync for the company.';
+                }
+
 
 
             }

@@ -14,6 +14,7 @@ codeunit 60500 "Transfer Company"
 
                 // Customer Transfer
                 FromCustomerlist.ChangeCompany(Companies.Name);  // then point to the from company list of customer
+                FromCustomerlist.SetFilter("Include For Sync", '%1', true);
                 if FromCustomerlist.FindFirst then
                     repeat
                         ToCompanies.Reset;
@@ -54,6 +55,7 @@ codeunit 60500 "Transfer Company"
 
                 //Vendor Transfer
                 FromVendorlist.ChangeCompany(Companies.Name);  // then point to the from company list of Vendor
+                FromVendorlist.SetFilter("Include For Sync", '%1', true);
                 if FromVendorlist.FindFirst then
                     repeat
                         ToCompanies.Reset;
@@ -118,6 +120,7 @@ codeunit 60500 "Transfer Company"
 
                 // Item Transfer
                 FromItemlist.ChangeCompany(Companies.Name);  // then point to the from company list of Item
+                FromItemlist.SetFilter("Include For Sync", '%1', true);
                 if FromItemlist.FindFirst then
                     repeat
                         ToCompanies.Reset;
@@ -237,6 +240,27 @@ codeunit 60500 "Transfer Company"
                             until ToCompanies.Next = 0;
                     until FromLSCItemScale.Next = 0;
 
+                // LSC KDS Item Section Routing- Item
+                FromLSCKDSItemSectionRoutingt.ChangeCompany(Companies.Name);  // then point to the from company list of LSC Item Scale
+                if FromLSCKDSItemSectionRoutingt.FindFirst then
+                    repeat
+                        ToCompanies.Reset;
+                        ToCompanies.SetRange(Type, ToCompanies.Type::Item);
+                        ToCompanies.SetRange("Include for Data Sync", True);
+                        if ToCompanies.FindSet then
+                            repeat
+                                ToLSCKDSItemSectionRoutingt.Reset();
+                                ToLSCKDSItemSectionRoutingt.ChangeCompany(ToCompanies."Company Name");
+                                ToLSCKDSItemSectionRoutingt.SetFilter("Item Type", '%1', FromLSCKDSItemSectionRoutingt."Item Type");
+                                ToLSCKDSItemSectionRoutingt.SetRange(Code, FromLSCKDSItemSectionRoutingt.Code);
+                                ToLSCKDSItemSectionRoutingt.SetRange("Line No.", FromLSCKDSItemSectionRoutingt."Line No.");
+                                if not ToLSCKDSItemSectionRoutingt.FindFirst then begin
+                                    ToLSCKDSItemSectionRoutingt.TransferFields(FromLSCKDSItemSectionRoutingt);
+                                    if ToLSCKDSItemSectionRoutingt.Insert(true) then;
+                                end;
+                            until ToCompanies.Next = 0;
+                    until FromLSCKDSItemSectionRoutingt.Next = 0;
+
                 // LSC Scale Free Message
                 FromLSCScaleFreeMsg.ChangeCompany(Companies.Name);  // then point to the from company list of LSC Scale Free Message
                 if FromLSCScaleFreeMsg.FindFirst then
@@ -278,6 +302,7 @@ codeunit 60500 "Transfer Company"
 
                 //G/L Account Transfer
                 FromGLAcclist.ChangeCompany(Companies.Name);  // then point to the from company list of G/L Account
+                FromGLAcclist.SetFilter("Include For Sync", '%1', true);
                 if FromGLAcclist.FindFirst then
                     repeat
                         ToCompanies.Reset;
@@ -342,6 +367,8 @@ codeunit 60500 "Transfer Company"
         ToItemUOM: Record "Item Unit of Measure";
         FromLSCItemDist: Record "LSC Item Distribution";
         FromLSCItemScale: Record "LSC Item Scale";
+        FromLSCKDSItemSectionRoutingt: Record "LSC KDS Item Section Routing";
+        ToLSCKDSItemSectionRoutingt: Record "LSC KDS Item Section Routing";
         FromLSCBarcodes: Record "LSC Barcodes";
         FromLSCScaleFreeMsg: Record "LSC Scale Free Message";
         ToLSCItemDist: Record "LSC Item Distribution";

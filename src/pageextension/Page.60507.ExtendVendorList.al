@@ -2,7 +2,14 @@ pageextension 60507 ExtendVendorList extends "Vendor List"
 {
     layout
     {
-        // Add changes to page layout here
+        addafter(County)
+        {
+            field("Include For Sync"; Rec."Include For Sync")
+            {
+                ApplicationArea = All;
+                Caption = 'Sync Data';
+            }
+        }
     }
 
     actions
@@ -19,6 +26,48 @@ pageextension 60507 ExtendVendorList extends "Vendor List"
                 RunObject = page "MDS Companies";
                 RunPageLink = Type = const(Vendor);
 
+            }
+        }
+        addafter("Data Sync Company")
+        {
+            action("Select Data Sync")
+            {
+                ApplicationArea = Basic, Suite;
+                Caption = 'Select for Data Sync';
+                Image = Translations;
+                Promoted = true;
+                PromotedCategory = Process;
+                trigger OnAction()
+                var
+                    recVendor: Record Vendor;
+                begin
+                    CurrPage.SetSelectionFilter(recVendor);
+                    if recVendor.FindSet() then
+                        repeat
+                            recVendor."Include For Sync" := true;
+                            recVendor.Modify(false);
+                        until recVendor.Next() = 0;
+                end;
+
+            }
+            action("Clear Data Sync")
+            {
+                ApplicationArea = Basic, Suite;
+                Caption = 'Clear Data Sync';
+                Image = Translations;
+                Promoted = true;
+                PromotedCategory = Process;
+                trigger OnAction()
+                var
+                    recVendor: Record Vendor;
+                begin
+                    CurrPage.SetSelectionFilter(recVendor);
+                    if recVendor.FindSet() then
+                        repeat
+                            recVendor."Include For Sync" := false;
+                            recVendor.Modify(false);
+                        until recVendor.Next() = 0;
+                end;
             }
         }
     }
