@@ -15,7 +15,7 @@ codeunit 60500 "Transfer Company"
                 // Customer Transfer
                 FromCustomerlist.ChangeCompany(Companies.Name);  // then point to the from company list of customer
                 FromCustomerlist.SetFilter("Include For Sync", '%1', true);
-                if FromCustomerlist.FindFirst then
+                if FromCustomerlist.FindSet() then
                     repeat
                         ToCompanies.Reset;
                         ToCompanies.SetRange(Type, ToCompanies.Type::Customer);
@@ -24,12 +24,14 @@ codeunit 60500 "Transfer Company"
                             repeat
                                 ToCustomer.Reset();
                                 ToCustomer.ChangeCompany(ToCompanies."Company Name");
-                                ToCustomer.SetRange(Name, FromCustomerlist.Name); //check on the Name
+                                ToCustomer.SetRange("No.", FromCustomerlist."No."); //check on the No
                                 if not ToCustomer.FindFirst then begin
                                     ToCustomer.TransferFields(FromCustomerlist);
                                     if ToCustomer.Insert then;
                                 end;
                             until ToCompanies.Next = 0;
+                        FromCustomerlist."Include For Sync" := false;
+                        FromCustomerlist.Modify(false);
                     until FromCustomerlist.Next = 0;
 
                 // Default Dimension - Customer
@@ -56,7 +58,7 @@ codeunit 60500 "Transfer Company"
                 //Vendor Transfer
                 FromVendorlist.ChangeCompany(Companies.Name);  // then point to the from company list of Vendor
                 FromVendorlist.SetFilter("Include For Sync", '%1', true);
-                if FromVendorlist.FindFirst then
+                if FromVendorlist.FindSet() then
                     repeat
                         ToCompanies.Reset;
                         ToCompanies.SetRange(Type, ToCompanies.Type::Vendor);
@@ -64,12 +66,14 @@ codeunit 60500 "Transfer Company"
                         if ToCompanies.FindSet then
                             repeat
                                 ToVendor.ChangeCompany(ToCompanies."Company Name");
-                                ToVendor.SetRange(Name, FromVendorlist.Name); //check on the Name
+                                ToVendor.SetRange("No.", FromVendorlist."No."); //check on the No
                                 if not ToVendor.FindFirst then begin
                                     ToVendor.TransferFields(FromVendorlist);
                                     if ToVendor.Insert then;
                                 end;
                             until ToCompanies.Next = 0;
+                        FromVendorlist."Include For Sync" := false;
+                        FromVendorlist.Modify(false);
                     until FromVendorlist.Next = 0;
 
 
@@ -121,7 +125,7 @@ codeunit 60500 "Transfer Company"
                 // Item Transfer
                 FromItemlist.ChangeCompany(Companies.Name);  // then point to the from company list of Item
                 FromItemlist.SetFilter("Include For Sync", '%1', true);
-                if FromItemlist.FindFirst then
+                if FromItemlist.FindSet() then
                     repeat
                         ToCompanies.Reset;
                         ToCompanies.SetRange(Type, ToCompanies.Type::Item);
@@ -129,12 +133,14 @@ codeunit 60500 "Transfer Company"
                         if ToCompanies.FindSet then
                             repeat
                                 ToItem.ChangeCompany(ToCompanies."Company Name");
-                                ToItem.SetRange(Description, FromItemlist.Description); //check on the description
+                                ToItem.SetRange("No.", FromItemlist."No."); //check on the No
                                 if not ToItem.FindFirst then begin
                                     ToItem.TransferFields(FromItemlist);
                                     if ToItem.Insert then;
                                 end;
                             until ToCompanies.Next = 0;
+                        FromItemlist."Include For Sync" := false;
+                        FromItemlist.Modify(false);
                     until FromItemlist.Next = 0;
 
 
@@ -233,7 +239,6 @@ codeunit 60500 "Transfer Company"
                                 ToLSCItemScale.ChangeCompany(ToCompanies."Company Name");
                                 ToLSCItemScale.SetRange("Item No.", FromLSCItemScale."Item No.");
                                 if not ToLSCItemScale.FindFirst then begin
-
                                     ToLSCItemScale.TransferFields(FromLSCItemScale);
                                     if ToLSCItemScale.Insert(true) then;
                                 end;
@@ -311,12 +316,14 @@ codeunit 60500 "Transfer Company"
                         if ToCompanies.FindSet then
                             repeat
                                 ToGLAcclist.ChangeCompany(ToCompanies."Company Name");
-                                ToGLAcclist.SetRange(Name, FromGLAcclist.Name); //check on the Name
+                                ToGLAcclist.SetRange("No.", FromGLAcclist."No."); //check on the Name
                                 if not ToGLAcclist.FindFirst then begin
                                     ToGLAcclist.TransferFields(FromGLAcclist);
                                     if ToGLAcclist.Insert then;
                                 end;
                             until ToCompanies.Next = 0;
+                        FromGLAcclist."Include For Sync" := false;
+                        FromGLAcclist.Modify(false);
                     until FromGLAcclist.Next = 0;
 
             until Companies.Next = 0;
@@ -343,7 +350,7 @@ codeunit 60500 "Transfer Company"
             until FromDefaultDim.Next = 0;
 
 
-        Message('Master data transfer successfully.');
+        Message('Master data transferred successfully.');
     end;
 
     var
